@@ -5,7 +5,7 @@ const dotenv = require('dotenv').config();
 const connectToDB=require('./Config/db.js')
 const cors = require('cors');
 const userRouter=require('./Routes/user.js')
-// const productRouter=require('./routes/productRoutes.js')
+const productRouter=require('./Routes/Product.js')
 // const orderRouter=require('./routes/orderRoutes.js')
 
 const app = express()
@@ -14,13 +14,14 @@ connectToDB();
 app.use(bodyParser.json());
 app.use(cors());
 
-//app.use(upload())
+
 // app.use('/seller',sellerRouter);
-// app.use('/product',productRouter);
+
 // app.use('/order',orderRouter);
+app.use('/product',productRouter);
 app.use('/user',userRouter);
 app.get("/",(req,res)=>{
-    res.send("hellooooooooooooooooo")
+    res.send("RUNNING SUCCESSFULLY")
 })
 
 
