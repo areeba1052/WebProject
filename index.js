@@ -6,6 +6,8 @@ const connectToDB=require('./Config/db.js')
 const cors = require('cors');
 const userRouter=require('./Routes/user.js')
 const productRouter=require('./Routes/Product.js')
+const sellerRouter=require('./Routes/Seller.js')
+
 // const orderRouter=require('./routes/orderRoutes.js')
 
 const app = express()
@@ -13,11 +15,12 @@ const port = process.env.PORT || 5000
 connectToDB();
 app.use(bodyParser.json());
 app.use(cors());
-
+app.use(express.json())
 
 // app.use('/seller',sellerRouter);
 
 // app.use('/order',orderRouter);
+app.use('/seller',sellerRouter);
 app.use('/product',productRouter);
 app.use('/user',userRouter);
 app.get("/",(req,res)=>{

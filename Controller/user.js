@@ -1,14 +1,55 @@
 const userModel = require('../Model/User'); 
+const asyncHandler = require("express-async-handler");
+const generateToken = require("../Config/generateToken");
 
-const getUser=async (req, res) => {
-    try {
-      const users = await userModel.find();
-      res.json(users);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server Error' });
-    }
+
+const registerUser = asyncHandler(async (req, res) => {
+  const { name, email, password, phone, address } = req.body;
+
+  if (!name || !email || !password || !phone || !address) {
+    res.status(400);
+    throw new Error("Please enter all the fields");
   }
+
+  const userExists = await userModel.findOne({ email });
+
+  if (userExists) {
+    res.status(400);
+    throw new Error("User already exists");
+  }
+
+  const newUser = await userModel.create({
+    name,
+    email,
+    password,
+    phone,
+    address
+  });
+
+  if (newUser) {
+    res.status(201).json({
+      _id: newUser._id,
+      name: newUser.name,
+      email: newUser.email,
+      phone: newUser.phone,
+      address: newUser.address,
+      token: generateToken(newUser._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("User not found");
+  }
+});
+
+const getUser = async (req, res) => {
+  try {
+    const users = await userModel.find();
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+}
 
 const create=async (req, res) => {
     const user = new userModel({
@@ -66,4 +107,4 @@ const deleteAccount = async (req, res) => {
   }
 }
 
-  module.exports={getUser,create,updateUser,deleteAccount,login};
+  module.exports={getUser,create,updateUser,deleteAccount,login,registerUser};
