@@ -17,11 +17,7 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    seller_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Seller',
-        required: true
-    },
+   
     image: {
         type:String,
         required: true

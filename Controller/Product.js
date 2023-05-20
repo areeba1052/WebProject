@@ -1,13 +1,12 @@
 const productModel=require("../Model/product");
 
 const create=async (req, res) => {
-    let {name,description,price,stock_quantity,seller_id,image,category}=req.body;
+    let {name,description,price,stock_quantity,image,category}=req.body;
     const product = new productModel({
       name: name,
       description: description,
       price: price,
       stock_quantity:stock_quantity,
-      seller_id:seller_id,
       image: image,
       category:category
     });
@@ -41,18 +40,18 @@ const delProduct= async (req, res) => {
   res.status(400).send(err.message);
 }
   }
-const getProductofSeller=async (req, res) => {
-  try {
-  let id = req.params.id;
-  const products = await productModel.find({ seller_id: id });
-  res.json(products);
-} catch (err) {
-  res.status(500).json({ message: err.message });
-}
-  }
+// const getProductofSeller=async (req, res) => {
+//   try {
+//   let id = req.params.id;
+//   const products = await productModel.find({ seller_id: id });
+//   res.json(products);
+// } catch (err) {
+//   res.status(500).json({ message: err.message });
+// }
+//   }
 
 
 
 
-module.exports={create,updateProduct,delProduct,getProductofSeller}
+module.exports={create,updateProduct,delProduct}
 

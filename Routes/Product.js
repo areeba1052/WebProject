@@ -1,10 +1,7 @@
 const express = require('express');
 const productRouter = express.Router();
 
-const {create,updateProduct,delProduct,getProductofSeller}=require("../Controller/Product");
-
-// Get all products
-productRouter.get('/get/:id',getProductofSeller );
+const {create,updateProduct,delProduct}=require("../Controller/Product");
 
 // Create a product
 productRouter.post('/create', create );
