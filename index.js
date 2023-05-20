@@ -7,6 +7,7 @@ const cors = require('cors');
 const userRouter=require('./Routes/user.js')
 const productRouter=require('./Routes/Product.js')
 const sellerRouter=require('./Routes/Seller.js')
+const orderRouter=require('./Routes/orderRoute.js')
 
 // const orderRouter=require('./routes/orderRoutes.js')
 
@@ -22,6 +23,7 @@ app.use(express.json())
 // app.use('/order',orderRouter);
 app.use('/seller',sellerRouter);
 app.use('/product',productRouter);
+app.use('/order',orderRouter);
 app.use('/user',userRouter);
 app.get("/",(req,res)=>{
     res.send("RUNNING SUCCESSFULLY")
